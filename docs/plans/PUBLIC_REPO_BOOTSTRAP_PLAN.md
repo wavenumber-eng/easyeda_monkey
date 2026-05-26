@@ -24,7 +24,8 @@ Stand up `easyeda-monkey` as a standalone public package before wiring it into
 GitHub reports the `CI` and `Publish` workflows as active and repository
 Actions permissions as enabled, but no run was created for the first two pushes
 to `main`. Manual dispatch for `CI` also failed with GitHub HTTP 500 on
-2026-05-26.
+2026-05-26. Tracked as
+https://github.com/wavenumber-eng/easyeda_monkey/issues/1.
 
 Local release-equivalent checks pass on Windows:
 
