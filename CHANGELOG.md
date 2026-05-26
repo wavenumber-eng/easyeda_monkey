@@ -10,3 +10,7 @@
   build checks, and clean install smoke coverage.
 - Add the `easyeda-monkey fetch-part` CLI and design-document signoff policy
   for registered commands.
+- Use an MIT license for the public package.
+- Document `uv tool install` as the preferred CLI install path and `uv` as the
+  development/test workflow.
+- Add ADR-003 for CLI command-module discipline and dependency minimization.

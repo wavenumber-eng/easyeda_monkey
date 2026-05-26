@@ -44,6 +44,21 @@ def test_cli_commands_have_matching_design_docs() -> None:
         assert '<section id="tests">' in text
 
 
+def test_cli_commands_have_dedicated_modules() -> None:
+    """Verify that public CLI commands do not live in the orchestrator module."""
+    orchestrator_text = (PACKAGE_ROOT / "src" / "py" / "easyeda_monkey" / "cli.py").read_text(
+        encoding="utf-8"
+    )
+    assert ".add_parser(" not in orchestrator_text
+    assert ".set_defaults(handler=" not in orchestrator_text
+
+    commands_root = PACKAGE_ROOT / "src" / "py" / "easyeda_monkey" / "cli_commands"
+    for command in CLI_COMMANDS:
+        module_name = command.name.replace("-", "_")
+        module_path = commands_root / f"{module_name}.py"
+        assert module_path.exists(), f"Missing CLI command module for {command.name}: {module_path}"
+
+
 def test_cli_config_contracts_are_declared() -> None:
     """Verify that each command doc declares whether it has a config contract."""
     for command in CLI_COMMANDS:

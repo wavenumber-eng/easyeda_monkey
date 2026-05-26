@@ -4,7 +4,7 @@ version = "2026.5.26"
 description = "Core EasyEDA / LCSC symbol, footprint, and 3D reference parsing tooling"
 readme = "README.md"
 requires-python = ">=3.11,<3.13"
-license = { text = "AGPL-3.0-or-later" }
+license = { text = "MIT" }
 authors = [
     { name = "Wavenumber LLC" },
 ]

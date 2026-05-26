@@ -9,7 +9,7 @@ Stand up `easyeda-monkey` as a standalone public package before wiring it into
 
 - [x] Copy parser source, local fixtures, and tests from the existing package.
 - [x] Remove local workspace path assumptions from public docs.
-- [x] Add AGPL license, contribution guide, issue template, and PR template.
+- [x] Add MIT license, contribution guide, issue template, and PR template.
 - [x] Add Rack `L99_signoff` coverage for version, changelog, and source
       quality.
 - [x] Add CI across Windows, Linux, and macOS.
@@ -20,6 +20,11 @@ Stand up `easyeda-monkey` as a standalone public package before wiring it into
 - [x] Push `main` to `wavenumber-eng/easyeda_monkey`.
 - [x] Add first CLI command and registry-backed HTML design-document signoff
       rule.
+- [x] Adopt MIT licensing for the public package.
+- [x] Document `uv tool install` as the preferred CLI install path and `uv` as
+      the development/test workflow.
+- [x] Add ADR-003 for per-command CLI modules and dependency-minimization
+      review discipline.
 
 ## Current Blocker
 
@@ -48,7 +53,8 @@ Local release-equivalent checks pass on Windows:
       `wavenumber-eng/easyeda_monkey`.
 - [ ] Create tag `easyeda-monkey/v2026.5.26`.
 - [ ] Publish the GitHub release after final approval.
-- [ ] Verify `pip install easyeda-monkey==2026.5.26` from a clean venv.
+- [ ] Verify `uv tool install easyeda-monkey==2026.5.26` and
+      `pip install easyeda-monkey==2026.5.26` from clean environments.
 
 ## Follow-Up Work
 

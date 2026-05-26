@@ -1,7 +1,8 @@
 # EasyEDA Monkey
 
 `easyeda_monkey` is a small Python package for reading EasyEDA / LCSC component
-data into typed Python objects.
+data into typed Python objects. It also exposes a small diagnostic CLI for
+package-local fetch and inspection workflows.
 
 Current scope:
 
@@ -12,10 +13,33 @@ Current scope:
 - SVG path parsing helpers
 
 The package is intentionally focused on parsing and close-to-format data
-models. Workflow commands and conversion applications should live in downstream
-tools such as `altium-cruncher`.
+models. Larger workflow commands and conversion applications should live in
+downstream tools such as `altium-cruncher`.
 
 ## Install
+
+Install `uv` first if it is not already available:
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+On macOS or Linux:
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+For the command-line tool, use `uv tool install` so the executable is installed
+in an isolated tool environment and exposed on PATH:
+
+```powershell
+uv tool install easyeda-monkey
+uv tool update-shell
+easyeda-monkey --version
+```
+
+For library use inside an existing Python environment:
 
 ```powershell
 pip install easyeda-monkey
@@ -52,6 +76,10 @@ easyeda-monkey fetch-part C21190
 easyeda-monkey fetch-part C21190 --cache-dir .cache/easyeda --output C21190.summary.json
 ```
 
+The top-level CLI module is only an orchestrator. Each public subcommand lives
+in its own `easyeda_monkey.cli_commands` module, even when the command is
+small.
+
 ## Design And Test Docs
 
 `docs/` is the source of truth for architecture, tests, and contracts. The
@@ -63,6 +91,11 @@ when a registered command is missing its design document.
 
 Commands that accept config files must also define a machine-readable contract
 and validation tests before release.
+
+New public features, commands, and external dependencies need explicit
+justification in the commit, PR, or linked plan. As a general Wavenumber tool
+rule, prefer the standard library and existing dependencies unless a new
+dependency has a clear install, licensing, and maintenance case.
 
 ## Fixture Model
 
@@ -97,3 +130,7 @@ Deferred or downstream responsibilities:
 - [Architecture Decision Records](docs/adrs)
 - [Design Notes](docs/design)
 - [Plans](docs/plans)
+
+## License
+
+MIT.
