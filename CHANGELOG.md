@@ -8,3 +8,5 @@
   parser coverage using package-local saved API fixtures.
 - Add public CI, release workflow, Rack smoke tests, Python signoff, package
   build checks, and clean install smoke coverage.
+- Add the `easyeda-monkey fetch-part` CLI and design-document signoff policy
+  for registered commands.

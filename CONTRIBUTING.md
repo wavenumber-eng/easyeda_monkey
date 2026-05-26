@@ -8,7 +8,8 @@ Before opening a PR:
    infrastructure slice.
 2. Add or update tests for every public parser/API behavior change.
 3. Update docs for public interfaces, JSON behavior, or fixture contracts.
-4. Run package tests and signoff locally.
+4. Add or update `docs/design/` HTML for every public CLI command.
+5. Run package tests and signoff locally.
 
 Expected local checks:
 
@@ -22,3 +23,18 @@ uv run --extra test pyright src\py tests
 
 Release decisions, compatibility policy, and public contract changes should be
 recorded in `docs/adrs/`.
+
+## Design Documentation Rules
+
+`docs/` owns architecture, test, and contract documentation. `docs/design/`
+contains human-readable and machine-inspectable HTML design docs.
+
+Every public CLI command requires:
+
+- a command registry entry in code;
+- a matching `docs/design/cli/<command>.html` file;
+- a link from `docs/design/cli/index.html`;
+- usage, invocation, argument, output, and test sections.
+
+Signoff fails when those links are missing. Commands with config files also
+need a machine-readable contract and validation tests.

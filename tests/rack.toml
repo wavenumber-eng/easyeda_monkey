@@ -30,6 +30,12 @@ description = "3D model references and geometry"
 [concerns.api]
 description = "LCSC/EasyEDA component API client"
 
+[concerns.cli]
+description = "Public command-line interface behavior"
+
+[concerns.docs]
+description = "Design documentation and contract coverage"
+
 [concerns.release]
 description = "Package release smoke checks"
 

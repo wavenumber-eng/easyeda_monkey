@@ -47,6 +47,13 @@ def _venv_python(venv_dir: Path) -> Path:
     return venv_dir / script_dir / executable
 
 
+def _venv_script(venv_dir: Path, name: str) -> Path:
+    """Return an installed console script path for a venv."""
+    script_dir = "Scripts" if os.name == "nt" else "bin"
+    executable = f"{name}.exe" if os.name == "nt" else name
+    return venv_dir / script_dir / executable
+
+
 def _clean_env(venv_dir: Path) -> dict[str, str]:
     """Build an environment that prefers the test venv and avoids source leakage."""
     env = os.environ.copy()
@@ -80,6 +87,7 @@ def run_install_smoke(wheel: Path) -> None:
             cwd=temp_dir,
             env=env,
         )
+        _run([str(_venv_script(venv_dir, "easyeda-monkey")), "--version"], cwd=temp_dir, env=env)
         sys.stdout.write("Installed-package smoke passed.\n")
 
 

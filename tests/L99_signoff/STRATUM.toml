@@ -8,6 +8,7 @@ objectives = [
     "Package version metadata matches the release date contract",
     "Changelog mentions the release version",
     "Python signoff does not regress against the accepted baseline",
+    "Registered CLI commands have matching HTML design documentation",
 ]
 
 [dependencies]
@@ -29,3 +30,19 @@ python_hygiene = "py_signoff has zero findings"
 
 [subtests.approach]
 pytest = "Run package-local signoff checks as normal pytest tests"
+
+[[subtests]]
+id = "L99_002"
+file = "test_L99_002_design_docs.py"
+name = "Design Documentation Signoff"
+description = "Validate CLI design document coverage"
+concerns = ["release", "signoff"]
+test_case_type = "audit_meta"
+
+[subtests.objectives]
+design_index = "Master docs/design/index.html and CLI index exist"
+cli_docs = "Every registered CLI command has a matching docs/design/cli HTML page"
+config_contracts = "Command docs declare whether config contracts are required"
+
+[subtests.approach]
+pytest = "Inspect CLI registry and matching design documentation"

@@ -18,6 +18,8 @@ Stand up `easyeda-monkey` as a standalone public package before wiring it into
 - [x] Add ruff lint checking to local and CI signoff.
 - [x] Add pyright type checking to local and CI signoff.
 - [x] Push `main` to `wavenumber-eng/easyeda_monkey`.
+- [x] Add first CLI command and registry-backed HTML design-document signoff
+      rule.
 
 ## Current Blocker
 

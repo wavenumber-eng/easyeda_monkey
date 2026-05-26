@@ -42,6 +42,28 @@ uv run --extra test ruff check .
 uv run --extra test pyright src/py tests
 ```
 
+## CLI
+
+The package installs the `easyeda-monkey` console script.
+
+```powershell
+easyeda-monkey --version
+easyeda-monkey fetch-part C21190
+easyeda-monkey fetch-part C21190 --cache-dir .cache/easyeda --output C21190.summary.json
+```
+
+## Design And Test Docs
+
+`docs/` is the source of truth for architecture, tests, and contracts. The
+master design entry point is [docs/design/index.html](docs/design/index.html).
+
+Every public CLI command must have a matching HTML design document under
+`docs/design/cli/`. The filename must match the command name, and signoff fails
+when a registered command is missing its design document.
+
+Commands that accept config files must also define a machine-readable contract
+and validation tests before release.
+
 ## Fixture Model
 
 Active fixtures live under:
