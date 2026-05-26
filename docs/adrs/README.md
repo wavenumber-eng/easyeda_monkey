@@ -9,3 +9,4 @@ ADRs for the EasyEDA parser package.
 - [ADR-003](ADR-003-cli-command-and-dependency-discipline.md) - CLI command and dependency discipline
 - [ADR-004](ADR-004-interface-design-doc-and-rack-ownership.md) - Interface design documentation and Rack ownership
 - [ADR-005](ADR-005-test-support-helper-location.md) - Test support helper location
+- [ADR-006](ADR-006-documentation-lifecycle-and-release-boundary.md) - Documentation lifecycle and release boundary

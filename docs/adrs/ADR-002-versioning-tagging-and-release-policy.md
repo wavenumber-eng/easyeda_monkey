@@ -33,6 +33,11 @@ Every release must include:
 - successful `twine check`
 - an installed-wheel install test
 
+Release artifacts may include public reference docs such as ADRs, design docs,
+canonical format docs, contracts, and tests. Developer planning and research
+notes under `docs/plans/` and `docs/research/` are not part of the public
+release artifacts and must be excluded from source distributions.
+
 GitHub Actions is the preferred release path once PyPI Trusted Publishing is
 configured for this repository.
 
