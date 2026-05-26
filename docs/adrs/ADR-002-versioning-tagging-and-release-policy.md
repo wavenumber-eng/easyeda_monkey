@@ -6,9 +6,9 @@ Accepted.
 
 ## Context
 
-`easyeda-monkey` is a public package and will be consumed by downstream tools
-such as `altium-cruncher`. Releases need to be reproducible from Git tags and
-automatable through GitHub Actions.
+`easyeda-monkey` is a public package and will be consumed by downstream tools.
+Releases need to be reproducible from Git tags and automatable through GitHub
+Actions.
 
 ## Decision
 

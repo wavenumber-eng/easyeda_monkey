@@ -14,7 +14,7 @@ Current scope:
 
 The package is intentionally focused on parsing and close-to-format data
 models. Larger workflow commands and conversion applications should live in
-downstream tools such as `altium-cruncher`.
+downstream tools.
 
 ## Install
 

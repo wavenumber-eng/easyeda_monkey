@@ -8,8 +8,8 @@ Accepted.
 
 Python tools in this package family should stay small, easy to install, and
 easy to review. `easyeda-monkey` is the first small public repo where this
-convention is being codified, but the rule is intended for `altium-cruncher`
-and future tool repos as well.
+convention is being codified, but the rule is intended for future tool repos as
+well.
 
 CLI commands can grow quickly if each command places parser setup, command
 behavior, output formatting, and dependency imports into the top-level entry
