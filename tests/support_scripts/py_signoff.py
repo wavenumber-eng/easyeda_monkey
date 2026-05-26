@@ -1,8 +1,7 @@
 """Dependency-free Python signoff for the EasyEDA Monkey package.
 
-Mirrors the public Wavenumber package quality gate: type annotations on public
-code paths, controlled `Any` usage, and radon A/B complexity for new code. Five
-lanes:
+Mirrors the public package quality gate: type annotations on public code paths,
+controlled `Any` usage, and radon A/B complexity for new code. Five lanes:
 
 1. file-too-large: hard caps on Python source file line count and byte size.
 2. complexity: per-function cyclomatic complexity. New functions must be radon
@@ -30,12 +29,13 @@ import json
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import cast
 
 
 DEFAULT_INCLUDES: tuple[str, ...] = (
     "__init__.py",
     "src/py/easyeda_monkey/**/*.py",
-    "scripts/**/*.py",
+    "tests/support_scripts/**/*.py",
 )
 DEFAULT_EXCLUDES: tuple[str, ...] = (
     "**/__pycache__/**",
@@ -102,20 +102,40 @@ class Baseline:
     @classmethod
     def from_dict(cls, payload: dict[str, object]) -> "Baseline":
         return cls(
-            schema=int(payload.get("schema", 1) or 1),
-            max_file_lines=int(payload.get("max_file_lines", DEFAULT_MAX_FILE_LINES)),
-            max_file_bytes=int(payload.get("max_file_bytes", DEFAULT_MAX_FILE_BYTES)),
-            max_new_code_complexity=int(
-                payload.get("max_new_code_complexity", DEFAULT_NEW_CODE_MAX_COMPLEXITY)
+            schema=_int_payload_field(payload, "schema", 1),
+            max_file_lines=_int_payload_field(
+                payload,
+                "max_file_lines",
+                DEFAULT_MAX_FILE_LINES,
             ),
-            file_lines_offenders=dict(payload.get("file_lines_offenders", {}) or {}),
-            file_bytes_offenders=dict(payload.get("file_bytes_offenders", {}) or {}),
-            complexity_offenders=dict(payload.get("complexity_offenders", {}) or {}),
-            annotation_missing_offenders=list(
-                payload.get("annotation_missing_offenders", []) or []
+            max_file_bytes=_int_payload_field(
+                payload,
+                "max_file_bytes",
+                DEFAULT_MAX_FILE_BYTES,
             ),
-            any_count_total=int(payload.get("any_count_total", 0) or 0),
-            duplicate_groups=list(payload.get("duplicate_groups", []) or []),
+            max_new_code_complexity=_int_payload_field(
+                payload,
+                "max_new_code_complexity",
+                DEFAULT_NEW_CODE_MAX_COMPLEXITY,
+            ),
+            file_lines_offenders=_str_int_dict_payload_field(
+                payload,
+                "file_lines_offenders",
+            ),
+            file_bytes_offenders=_str_int_dict_payload_field(
+                payload,
+                "file_bytes_offenders",
+            ),
+            complexity_offenders=_str_int_dict_payload_field(
+                payload,
+                "complexity_offenders",
+            ),
+            annotation_missing_offenders=_str_list_payload_field(
+                payload,
+                "annotation_missing_offenders",
+            ),
+            any_count_total=_int_payload_field(payload, "any_count_total", 0),
+            duplicate_groups=_duplicate_groups_payload_field(payload),
         )
 
     def to_dict(self) -> dict[str, object]:
@@ -133,13 +153,79 @@ class Baseline:
                 (
                     {
                         "hash": str(group.get("hash", "")),
-                        "members": sorted(list(group.get("members", []) or [])),
+                        "members": _duplicate_group_members(group),
                     }
                     for group in self.duplicate_groups
                 ),
                 key=lambda group: str(group.get("hash", "")),
             ),
         }
+
+
+def _int_payload_field(payload: dict[str, object], key: str, default: int) -> int:
+    """Read an integer value from a JSON-like payload."""
+    value = payload.get(key, default)
+    if isinstance(value, int | float | str):
+        try:
+            return int(value)
+        except ValueError:
+            return default
+    return default
+
+
+def _str_int_dict_payload_field(payload: dict[str, object], key: str) -> dict[str, int]:
+    """Read a string-to-int dictionary from a JSON-like payload."""
+    value = payload.get(key, {})
+    if not isinstance(value, dict):
+        return {}
+
+    result: dict[str, int] = {}
+    for raw_key, raw_value in value.items():
+        if not isinstance(raw_key, str):
+            continue
+        if isinstance(raw_value, int | float | str):
+            try:
+                result[raw_key] = int(raw_value)
+            except ValueError:
+                continue
+    return result
+
+
+def _str_list_payload_field(payload: dict[str, object], key: str) -> list[str]:
+    """Read a string list from a JSON-like payload."""
+    value = payload.get(key, [])
+    if not isinstance(value, list):
+        return []
+    return [item for item in value if isinstance(item, str)]
+
+
+def _duplicate_groups_payload_field(payload: dict[str, object]) -> list[dict[str, object]]:
+    """Read duplicate group records from a JSON-like payload."""
+    value = payload.get("duplicate_groups", [])
+    if not isinstance(value, list):
+        return []
+
+    groups: list[dict[str, object]] = []
+    for item in value:
+        if not isinstance(item, dict):
+            continue
+        hash_value = item.get("hash", "")
+        members_value = item.get("members", [])
+        members = (
+            [str(member) for member in members_value]
+            if isinstance(members_value, list)
+            else []
+        )
+        groups.append({"hash": str(hash_value), "members": members})
+    return groups
+
+
+def _duplicate_group_members(group: dict[str, object]) -> list[str]:
+    """Return normalized duplicate group members."""
+    members = group.get("members", [])
+    if not isinstance(members, list):
+        return []
+    return sorted(str(member) for member in members)
 
 
 @dataclass(frozen=True)
@@ -584,7 +670,7 @@ def _evaluate(
     current_groups: list[dict[str, object]] = []
     baseline_lookup: dict[str, set[str]] = {}
     for group in baseline.duplicate_groups:
-        members = set(str(m) for m in (group.get("members") or []))
+        members = set(_duplicate_group_members(group))
         baseline_lookup[str(group.get("hash", ""))] = members
     for body_hash, members in sorted(bodies.items()):
         if len(members) < 2:
@@ -638,7 +724,10 @@ def _evaluate(
 def _load_baseline(path: Path | None) -> Baseline:
     if path is None or not path.exists():
         return Baseline()
-    return Baseline.from_dict(json.loads(path.read_text(encoding="utf-8")))
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise SystemExit(f"Baseline JSON root must be an object: {path}")
+    return Baseline.from_dict(cast(dict[str, object], payload))
 
 
 def _save_baseline(path: Path, baseline: Baseline) -> None:
@@ -672,7 +761,10 @@ def _parse_args(argv: list[str]) -> argparse.Namespace:
         "--baseline",
         type=Path,
         default=None,
-        help="Path to baseline JSON. Defaults to <root>/scripts/py_signoff_baseline.json.",
+        help=(
+            "Path to baseline JSON. Defaults to "
+            "<root>/tests/support_scripts/py_signoff_baseline.json."
+        ),
     )
     parser.add_argument(
         "--update-baseline",
@@ -740,7 +832,9 @@ def main(argv: list[str] | None = None) -> int:
     root = args.root.resolve()
     includes = list(args.include) if args.include else list(DEFAULT_INCLUDES)
     excludes = list(DEFAULT_EXCLUDES) + list(args.exclude or [])
-    baseline_path: Path = args.baseline or root / "scripts" / "py_signoff_baseline.json"
+    baseline_path: Path = (
+        args.baseline or root / "tests" / "support_scripts" / "py_signoff_baseline.json"
+    )
     baseline = _load_baseline(baseline_path)
     if args.max_file_lines is not None:
         baseline.max_file_lines = args.max_file_lines

@@ -1,6 +1,6 @@
 name = "Release Signoff"
 order = 99
-description = "Final release signoff checks for versioning and Python hygiene"
+description = "Final release signoff checks for versioning, Python hygiene, and design coverage"
 enabled = true
 concerns = ["release", "signoff"]
 
@@ -8,7 +8,10 @@ objectives = [
     "Package version metadata matches the release date contract",
     "Changelog mentions the release version",
     "Python signoff does not regress against the accepted baseline",
+    "Ruff linting passes",
+    "Pyright type checking passes",
     "Registered CLI commands have matching HTML design documentation",
+    "Dataclasses and major interfaces have design docs and Rack test ownership",
 ]
 
 [dependencies]
@@ -46,3 +49,34 @@ config_contracts = "Command docs declare whether config contracts are required"
 
 [subtests.approach]
 pytest = "Inspect CLI registry and matching design documentation"
+
+[[subtests]]
+id = "L99_003"
+file = "test_L99_003_quality_tools.py"
+name = "Quality Tool Signoff"
+description = "Run lint and type checks through Rack-owned pytest tests"
+concerns = ["release", "signoff"]
+test_case_type = "audit_meta"
+
+[subtests.objectives]
+ruff = "ruff check passes"
+pyright = "pyright checks public source and tests"
+
+[subtests.approach]
+pytest = "Invoke quality tools as package-local pytest tests"
+
+[[subtests]]
+id = "L99_004"
+file = "test_L99_004_interface_design_docs.py"
+name = "Interface Design Documentation Signoff"
+description = "Validate dataclass and major-interface design documentation and test ownership"
+concerns = ["release", "signoff", "docs"]
+test_case_type = "audit_meta"
+
+[subtests.objectives]
+dataclass_docs = "Every dataclass has a machine-readable design-doc section"
+major_interface_docs = "Major public interfaces are listed with design and test requirements"
+rack_test_ownership = "Each interface doc references an exercising Rack stratum and test target"
+
+[subtests.approach]
+pytest = "Inspect source AST, design HTML, Rack strata, and test files"

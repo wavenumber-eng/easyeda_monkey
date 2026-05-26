@@ -14,7 +14,7 @@ Stand up `easyeda-monkey` as a standalone public package before wiring it into
       quality.
 - [x] Add CI across Windows, Linux, and macOS.
 - [x] Add a PyPI release workflow using Trusted Publishing.
-- [x] Add build, `twine check`, and installed-wheel smoke coverage.
+- [x] Add build, `twine check`, and installed-wheel test coverage.
 - [x] Add ruff lint checking to local and CI signoff.
 - [x] Add pyright type checking to local and CI signoff.
 - [x] Push `main` to `wavenumber-eng/easyeda_monkey`.
@@ -25,6 +25,10 @@ Stand up `easyeda-monkey` as a standalone public package before wiring it into
       the development/test workflow.
 - [x] Add ADR-003 for per-command CLI modules and dependency-minimization
       review discipline.
+- [x] Make Rack the primary local signoff gate and move ruff/pyright under
+      L99.
+- [x] Add API design-doc signoff for dataclasses, major interfaces, and Rack
+      test ownership.
 
 ## Current Blocker
 
@@ -36,14 +40,10 @@ https://github.com/wavenumber-eng/easyeda_monkey/issues/1.
 
 Local release-equivalent checks pass on Windows:
 
-- `uv run --extra test pytest -q`
 - `uv run --extra test rack run --all`
-- `uv run --extra test python scripts/py_signoff.py --root . --baseline scripts/py_signoff_baseline.json`
-- `uv run --extra test ruff check .`
-- `uv run --extra test pyright src/py tests`
 - `uv run --extra test python -m build`
 - `uv run --extra test twine check dist\*`
-- `uv run --extra test python scripts/install_smoke.py`
+- `uv run --extra test python tests/support_scripts/install_test.py`
 
 ## Before First Release
 

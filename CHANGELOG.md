@@ -6,8 +6,8 @@
   EasyEDA parser package.
 - Include EasyEDA/LCSC symbol, footprint, SVG path, pad, and 3D model reference
   parser coverage using package-local saved API fixtures.
-- Add public CI, release workflow, Rack smoke tests, Python signoff, package
-  build checks, and clean install smoke coverage.
+- Add public CI, release workflow, Rack tests, Python signoff, package build
+  checks, and clean install-test coverage.
 - Add the `easyeda-monkey fetch-part` CLI and design-document signoff policy
   for registered commands.
 - Use an MIT license for the public package.

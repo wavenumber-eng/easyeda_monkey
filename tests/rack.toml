@@ -37,13 +37,13 @@ description = "Public command-line interface behavior"
 description = "Design documentation and contract coverage"
 
 [concerns.release]
-description = "Package release smoke checks"
+description = "Package release checks"
 
 [concerns.signoff]
 description = "Final release quality gates"
 
 [lanes.fast]
-description = "Default smoke lane for structural/path verification"
+description = "Default test lane for structural/path verification"
 
 [lanes.full]
 description = "Broader routine-validation lane"
@@ -55,5 +55,7 @@ description = "Heavier or stricter validation lane"
 python_packages = [
     "pytest",
     "pytest-json-report",
+    "pyright",
+    "ruff",
     "wn-rack",
 ]

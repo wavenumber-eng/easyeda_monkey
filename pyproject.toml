@@ -49,7 +49,6 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.sdist]
 include = [
     "src/py/easyeda_monkey/**",
-    "scripts/**",
     "README.md",
     "CHANGELOG.md",
     "LICENSE",

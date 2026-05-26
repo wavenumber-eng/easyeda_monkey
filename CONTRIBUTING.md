@@ -18,8 +18,7 @@ Before opening a PR:
    PR, or linked plan.
 6. Run package tests and signoff locally.
 
-Minimize external dependencies. This is a general Wavenumber tool convention,
-not only an EasyEDA Monkey rule. A new dependency must explain why the standard
+Minimize external dependencies. A new dependency must explain why the standard
 library and existing project dependencies are not enough, whether it is
 runtime/optional/test-only, its license compatibility, and the expected
 packaging impact.
@@ -27,11 +26,7 @@ packaging impact.
 Expected local checks:
 
 ```powershell
-uv run --extra test pytest
 uv run --extra test rack run --all
-uv run --extra test python scripts\py_signoff.py --root . --baseline scripts\py_signoff_baseline.json
-uv run --extra test ruff check .
-uv run --extra test pyright src\py tests
 ```
 
 Release decisions, compatibility policy, and public contract changes should be
@@ -51,6 +46,22 @@ Every public CLI command requires:
 
 Signoff fails when those links are missing. Commands with config files also
 need a machine-readable contract and validation tests.
+
+## API Design Documentation Rules
+
+Every public dataclass and major interface requires design documentation under
+`docs/design/api/`.
+
+Each interface design section must include:
+
+- rationale for why the interface exists;
+- purpose and ownership boundary;
+- test requirements;
+- a working definition;
+- the Rack stratum and test target that exercise it.
+
+L99 signoff fails when a dataclass or listed major interface lacks design
+documentation or when the referenced Rack test ownership is missing.
 
 ## CLI Structure Rules
 

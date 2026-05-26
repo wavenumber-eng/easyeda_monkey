@@ -14,7 +14,6 @@ Rules:
 Quick start:
 
 ```powershell
-uv run --extra test pytest -q
 uv run --extra test rack list
 uv run --extra test rack run --all
 ```
@@ -22,4 +21,5 @@ uv run --extra test rack run --all
 Current active strata:
 
 - `L0_foundation`: parser and fixture coverage
-- `L99_signoff`: release, changelog, and Python quality gates
+- `L99_signoff`: release, changelog, Python quality, CLI docs, API docs, and
+  interface test ownership gates

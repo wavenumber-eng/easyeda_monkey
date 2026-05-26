@@ -6,10 +6,10 @@ Accepted.
 
 ## Context
 
-Wavenumber Python tools should stay small, easy to install, and easy to
-review. `easyeda-monkey` is the first small public repo where this convention
-is being codified, but the rule is intended for `altium-cruncher` and future
-tool repos as well.
+Python tools in this package family should stay small, easy to install, and
+easy to review. `easyeda-monkey` is the first small public repo where this
+convention is being codified, but the rule is intended for `altium-cruncher`
+and future tool repos as well.
 
 CLI commands can grow quickly if each command places parser setup, command
 behavior, output formatting, and dependency imports into the top-level entry
@@ -37,8 +37,8 @@ Every new public CLI command requires:
 - tests for behavior and help/registration;
 - a short justification in the commit, PR, or plan.
 
-Every Wavenumber tool should minimize external dependencies. New dependencies
-are accepted only when the commit or PR explains:
+Every tool in this package family should minimize external dependencies. New
+dependencies are accepted only when the commit or PR explains:
 
 - why the dependency is needed;
 - why the standard library or existing project dependencies are not sufficient;

@@ -18,8 +18,8 @@
     <h1>Install And CLI Tool Policy</h1>
     <p class="lede">
       This document defines the public install pattern for EasyEDA Monkey and
-      the workspace-install pattern that downstream Wavenumber repos should
-      copy for command-line Python tools.
+      the workspace-install pattern that downstream repos should copy for
+      command-line Python tools.
     </p>
   </header>
 
@@ -49,10 +49,10 @@ easyeda-monkey --version</code></pre>
     <h2>Development Install</h2>
     <p>
       Contributors should use <code>uv</code> for dependency sync, test runs,
-      package builds, and editable CLI smoke checks.
+      package builds, and editable CLI install tests.
     </p>
     <pre><code>uv sync --extra test
-uv run --extra test pytest -q
+uv run --extra test rack run --all
 uv tool install --force --editable .
 easyeda-monkey --version</code></pre>
   </section>
@@ -60,8 +60,8 @@ easyeda-monkey --version</code></pre>
   <section>
     <h2>Workspace Installer Pattern</h2>
     <p>
-      Wavenumber workspace setup and update scripts should install released CLI
-      tools with pinned versions and verify the generated executable.
+      Workspace setup and update scripts should install released CLI tools with
+      pinned versions and verify the generated executable.
     </p>
     <pre><code>uv tool install --force easyeda-monkey==2026.5.26
 uv tool update-shell
@@ -81,9 +81,9 @@ easyeda-monkey --version</code></pre>
       packages that build native wheels or platform-specific binaries.
     </p>
     <p>
-      Wavenumber tools should minimize external dependencies. New runtime,
-      optional, and test-only dependencies need explicit justification before
-      they are accepted.
+      Tools in this package family should minimize external dependencies. New
+      runtime, optional, and test-only dependencies need explicit justification
+      before they are accepted.
     </p>
     <p>
       PyInstaller and Nuitka are deferred until there is a clear no-Python or

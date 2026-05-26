@@ -31,7 +31,7 @@ Every release must include:
 - a passing Python signoff baseline check
 - successful source distribution and wheel builds
 - successful `twine check`
-- an installed-wheel smoke test
+- an installed-wheel install test
 
 GitHub Actions is the preferred release path once PyPI Trusted Publishing is
 configured for this repository.

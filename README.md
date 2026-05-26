@@ -59,12 +59,11 @@ The active suite uses redistributable saved EasyEDA / LCSC API response
 fixtures and does not require a private corpus.
 
 ```powershell
-uv run --extra test pytest -q
 uv run --extra test rack run --all
-uv run --extra test python scripts/py_signoff.py --root . --baseline scripts/py_signoff_baseline.json
-uv run --extra test ruff check .
-uv run --extra test pyright src/py tests
 ```
+
+Rack is the primary local gate. L99 signoff runs release metadata checks,
+Python signoff, CLI design-doc checks, API design-doc checks, ruff, and pyright.
 
 ## CLI
 
@@ -93,9 +92,13 @@ Commands that accept config files must also define a machine-readable contract
 and validation tests before release.
 
 New public features, commands, and external dependencies need explicit
-justification in the commit, PR, or linked plan. As a general Wavenumber tool
-rule, prefer the standard library and existing dependencies unless a new
-dependency has a clear install, licensing, and maintenance case.
+justification in the commit, PR, or linked plan. Prefer the standard library
+and existing dependencies unless a new dependency has a clear install,
+licensing, and maintenance case.
+
+Every public dataclass and major interface needs design documentation under
+`docs/design/api/`. L99 signoff fails when interface docs or Rack test
+ownership are missing.
 
 ## Fixture Model
 

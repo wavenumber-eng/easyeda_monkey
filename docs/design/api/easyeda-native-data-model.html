@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EasyEDA Native Data Model</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body data-doc-kind="api-interface-design">
+<main>
+  <nav class="nav">
+    <a href="../index.html">Design Index</a>
+    <a href="index.html">API</a>
+    <a href="../cli/index.html">CLI</a>
+  </nav>
+
+  <header>
+    <p class="status">API interface design</p>
+    <h1>EasyEDA Native Data Model</h1>
+    <p class="lede">
+      These interfaces preserve EasyEDA-native symbol, footprint, shape, pin,
+      pad, and 3D-model semantics. Each interface section is machine-readable:
+      L99 signoff requires the section, rationale, purpose, test requirements,
+      working definition, Rack stratum, test file, and test target.
+    </p>
+  </header>
+
+  <section
+    data-interface="EasyEdaSymbol"
+    data-rack-stratum="L0_foundation"
+    data-test-file="tests/L0_foundation/test_L0_001_symbol_parse.py"
+    data-test-target="EasyEdaSymbol">
+    <h2>EasyEdaSymbol</h2>
+    <p><strong>Rationale:</strong> A schematic symbol aggregate is the stable unit callers need after parsing an EasyEDA component response.</p>
+    <p><strong>Purpose:</strong> Hold symbol metadata, pins, and graphical primitives without converting away EasyEDA semantics.</p>
+    <p><strong>Test Requirements:</strong> Rack L0 parses saved API fixtures into symbols and verifies pin and graphic counts.</p>
+    <p><strong>Working Definition:</strong> A symbol works when public fixtures parse without errors and preserve expected metadata, pins, and shape collections.</p>
+  </section>
+
+  <section
+    data-interface="EeSymbolInfo"
+    data-rack-stratum="L0_foundation"
+    data-test-file="tests/L0_foundation/test_L0_001_symbol_parse.py"
+    data-test-target="EasyEdaSymbol">
+    <h2>EeSymbolInfo</h2>
+    <p><strong>Rationale:</strong> Symbol metadata needs a typed home separate from geometry so callers can inspect identity without walking graphics.</p>
+    <p><strong>Purpose:</strong> Store symbol name, prefix, LCSC id, package, and source identity parsed from component JSON.</p>
+    <p><strong>Test Requirements:</strong> Rack L0 symbol parse tests verify fixture metadata through the enclosing EasyEdaSymbol object.</p>
+    <p><strong>Working Definition:</strong> Metadata works when parsed symbols expose the expected component name and LCSC id from saved fixtures.</p>
+  </section>
+
+  <section
+    data-interface="EasyEdaPin"
+    data-rack-stratum="L0_foundation"
+    data-test-file="tests/L0_foundation/test_L0_001_symbol_parse.py"
+    data-test-target="EasyEdaSymbol">
+    <h2>EasyEdaPin</h2>
+    <p><strong>Rationale:</strong> Pins carry electrical and placement information that must remain distinct from symbol drawing primitives.</p>
+    <p><strong>Purpose:</strong> Store parsed EasyEDA pin fields such as name, number, location, orientation, length, and electrical type.</p>
+    <p><strong>Test Requirements:</strong> Rack L0 symbol tests verify pin counts and that parsed pins expose name or number fields.</p>
+    <p><strong>Working Definition:</strong> Pins work when fixture symbols produce expected pin counts and non-empty identity fields.</p>
+  </section>
+
+  <section
+    data-interface="EeRectangle"
+    data-rack-stratum="L0_foundation"
+    data-test-file="tests/L0_foundation/test_L0_001_symbol_parse.py"
+    data-test-target="EasyEdaSymbol">
+    <h2>EeRectangle</h2>
+    <p><strong>Rationale:</strong> EasyEDA rectangles appear in many symbol bodies and footprint graphics and need a typed primitive.</p>
+    <p><strong>Purpose:</strong> Store rectangle position, size, stroke, fill, and layer-like source fields.</p>
+    <p><strong>Test Requirements:</strong> Rack L0 symbol and footprint fixture tests verify rectangle counts through aggregate parsers.</p>
+    <p><strong>Working Definition:</strong> Rectangles work when fixtures with rectangular graphics parse and count correctly.</p>
+  </section>
+
+  <section
+    data-interface="EeCircle"
+    data-rack-stratum="L0_foundation"
+    data-test-file="tests/L0_foundation/test_L0_005_footprint_parse.py"
+    data-test-target="EasyEdaFootprint">
+    <h2>EeCircle</h2>
+    <p><strong>Rationale:</strong> Circles represent footprint silkscreen, holes, and symbol graphics that should not be flattened to generic dictionaries.</p>
+    <p><strong>Purpose:</strong> Store circle center, radius, stroke, fill, and source style fields.</p>
+    <p><strong>Test Requirements:</strong> Rack L0 footprint tests verify circle counts across saved fixtures.</p>
+    <p><strong>Working Definition:</strong> Circles work when circle-heavy fixtures parse with expected counts and round-trip as part of footprints.</p>
+  </section>
+
+  <section
+    data-interface="EeEllipse"
+    data-rack-stratum="L0_foundation"
+    data-test-file="tests/L0_foundation/test_L0_001_symbol_parse.py"
+    data-test-target="EasyEdaSymbol">
+    <h2>EeEllipse</h2>
+    <p><strong>Rationale:</strong> EasyEDA ellipses are distinct from circles and preserve separate radius values.</p>
+    <p><strong>Purpose:</strong> Store ellipse center, radii, stroke, fill, and source style fields.</p>
+    <p><strong>Test Requirements:</strong> Rack L0 symbol tests verify ellipse counts on fixtures that include indicator graphics.</p>
+    <p><strong>Working Definition:</strong> Ellipses work when symbols with ellipse graphics parse with expected counts.</p>
+  </section>
+
+  <section
+    data-interface="EeArc"
+    data-rack-stratum="L0_foundation"
+    data-test-file="tests/L0_foundation/test_L0_005_footprint_parse.py"
+    data-test-target="EasyEdaFootprint">
+    <h2>EeArc</h2>
+    <p><strong>Rationale:</strong> Arc path data must preserve EasyEDA sweep and endpoint intent for downstream drawing and conversion.</p>
+    <p><strong>Purpose:</strong> Store arc path text and parsed style fields as a native EasyEDA primitive.</p>
+    <p><strong>Test Requirements:</strong> Rack L0 footprint tests verify arc counts on fixtures with curved footprint geometry.</p>
+    <p><strong>Working Definition:</strong> Arcs work when arc-bearing fixtures parse with expected counts and retain their source path data.</p>
+  </section>
+
+  <section
+    data-interface="EePolyline"
+    data-rack-stratum="L0_foundation"
+    data-test-file="tests/L0_foundation/test_L0_001_symbol_parse.py"
+    data-test-target="EasyEdaSymbol">
+    <h2>EePolyline</h2>
+    <p><strong>Rationale:</strong> Polylines are common in symbol art and footprint silkscreen and need point-list preservation.</p>
+    <p><strong>Purpose:</strong> Store EasyEDA polyline point data and style fields.</p>
+    <p><strong>Test Requirements:</strong> Rack L0 symbol and footprint tests verify polyline counts on fixtures with line artwork.</p>
+    <p><strong>Working Definition:</strong> Polylines work when aggregate parsers preserve expected polyline counts across fixtures.</p>
+  </section>
+
+  <section
+    data-interface="EePolygon"
+    data-rack-stratum="L0_foundation"
+    data-test-file="tests/L0_foundation/test_L0_001_symbol_parse.py"
+    data-test-target="EasyEdaSymbol">
+    <h2>EePolygon</h2>
+    <p><strong>Rationale:</strong> Filled polygon graphics need to remain distinct from open polylines.</p>
+    <p><strong>Purpose:</strong> Store EasyEDA polygon point data and fill/stroke style fields.</p>
+    <p><strong>Test Requirements:</strong> Rack L0 symbol tests verify polygon counts on fixtures that use filled graphics.</p>
+    <p><strong>Working Definition:</strong> Polygons work when polygon-bearing fixtures parse with expected counts.</p>
+  </section>
+
+  <section
+    data-interface="EePath"
+    data-rack-stratum="L0_foundation"
+    data-test-file="tests/L0_foundation/test_L0_001_symbol_parse.py"
+    data-test-target="EasyEdaSymbol">
+    <h2>EePath</h2>
+    <p><strong>Rationale:</strong> Some EasyEDA graphics are arbitrary SVG-like path strings that cannot be represented as simpler primitives.</p>
+    <p><strong>Purpose:</strong> Preserve path command text and style fields for downstream parsing or rendering.</p>
+    <p><strong>Test Requirements:</strong> Rack L0 symbol tests verify path counts on fixtures with internal graphics.</p>
+    <p><strong>Working Definition:</strong> Paths work when path-bearing fixtures parse with expected counts and path text remains available.</p>
+  </section>
+
+  <section
+    data-interface="EasyEdaFootprint"
+    data-rack-stratum="L0_foundation"
+    data-test-file="tests/L0_foundation/test_L0_005_footprint_parse.py"
+    data-test-target="EasyEdaFootprint">
+    <h2>EasyEdaFootprint</h2>
+    <p><strong>Rationale:</strong> A footprint aggregate is the stable unit callers need after parsing EasyEDA package data.</p>
+    <p><strong>Purpose:</strong> Hold footprint metadata, pads, graphics, vias, holes, and text while preserving EasyEDA-native fields.</p>
+    <p><strong>Test Requirements:</strong> Rack L0 footprint tests parse saved fixtures, assert geometry counts, and verify JSON round-trip behavior.</p>
+    <p><strong>Working Definition:</strong> A footprint works when public fixtures parse without errors and preserve pads, graphics, holes, and round-trip JSON.</p>
+  </section>
+
+  <section
+    data-interface="EeFootprintInfo"
+    data-rack-stratum="L0_foundation"
+    data-test-file="tests/L0_foundation/test_L0_005_footprint_parse.py"
+    data-test-target="EasyEdaFootprint">
+    <h2>EeFootprintInfo</h2>
+    <p><strong>Rationale:</strong> Footprint identity metadata should be inspectable without walking geometry collections.</p>
+    <p><strong>Purpose:</strong> Store footprint name, package, source identifiers, and descriptive EasyEDA metadata.</p>
+    <p><strong>Test Requirements:</strong> Rack L0 footprint parse and round-trip tests exercise metadata through the enclosing footprint.</p>
+    <p><strong>Working Definition:</strong> Footprint metadata works when parsed fixtures produce stable aggregate identity and round-trip output.</p>
+  </section>
+
+  <section
+    data-interface="EeFootprintPad"
+    data-rack-stratum="L0_foundation"
+    data-test-file="tests/L0_foundation/test_L0_005_footprint_parse.py"
+    data-test-target="EasyEdaFootprint">
+    <h2>EeFootprintPad</h2>
+    <p><strong>Rationale:</strong> Pads are the central electrical/mechanical footprint primitive and need complete shape and hole fields.</p>
+    <p><strong>Purpose:</strong> Store pad number, geometry, layer, shape, hole, slot, rotation, and source fields.</p>
+    <p><strong>Test Requirements:</strong> Rack L0 footprint tests verify pad counts, pad numbers, shapes, layers, holes, and slots.</p>
+    <p><strong>Working Definition:</strong> Pads work when SMT, through-hole, slotted, and single-pad fixtures parse with expected fields.</p>
+  </section>
+
+  <section
+    data-interface="EeFootprintTrack"
+    data-rack-stratum="L0_foundation"
+    data-test-file="tests/L0_foundation/test_L0_005_footprint_parse.py"
+    data-test-target="EasyEdaFootprint">
+    <h2>EeFootprintTrack</h2>
+    <p><strong>Rationale:</strong> Footprint line artwork and copper-like segments need a typed representation with layer and width.</p>
+    <p><strong>Purpose:</strong> Store track point data, width, layer, net-like fields, and style fields.</p>
+    <p><strong>Test Requirements:</strong> Rack L0 footprint tests verify track counts across multiple package styles.</p>
+    <p><strong>Working Definition:</strong> Tracks work when fixtures with silkscreen or copper-like line data parse with expected counts.</p>
+  </section>
+
+  <section
+    data-interface="EeFootprintHole"
+    data-rack-stratum="L0_foundation"
+    data-test-file="tests/L0_foundation/test_L0_005_footprint_parse.py"
+    data-test-target="EasyEdaFootprint">
+    <h2>EeFootprintHole</h2>
+    <p><strong>Rationale:</strong> Non-pad holes and mechanical holes must be represented separately from through-hole pads.</p>
+    <p><strong>Purpose:</strong> Store standalone hole location, diameter, and source fields.</p>
+    <p><strong>Test Requirements:</strong> Rack L0 footprint tests verify non-pad hole counts and diameters for connector and socket fixtures.</p>
+    <p><strong>Working Definition:</strong> Holes work when fixtures with mechanical holes parse with expected count and diameter data.</p>
+  </section>
+
+  <section
+    data-interface="EeFootprintVia"
+    data-rack-stratum="L0_foundation"
+    data-test-file="tests/L0_foundation/test_L0_005_footprint_parse.py"
+    data-test-target="EasyEdaFootprint">
+    <h2>EeFootprintVia</h2>
+    <p><strong>Rationale:</strong> Vias can appear in EasyEDA footprint data and should not be collapsed into pads or holes.</p>
+    <p><strong>Purpose:</strong> Store via position, diameter, drill, net, and layer/source fields.</p>
+    <p><strong>Test Requirements:</strong> Rack L0 footprint parsing exercises the via collection through aggregate fixture parsing and round-trip behavior.</p>
+    <p><strong>Working Definition:</strong> Vias work when via-bearing package data can be parsed and serialized without losing fields.</p>
+  </section>
+
+  <section
+    data-interface="EeFootprintText"
+    data-rack-stratum="L0_foundation"
+    data-test-file="tests/L0_foundation/test_L0_005_footprint_parse.py"
+    data-test-target="EasyEdaFootprint">
+    <h2>EeFootprintText</h2>
+    <p><strong>Rationale:</strong> Designators, labels, and package text need typed geometry and style fields.</p>
+    <p><strong>Purpose:</strong> Store text value, location, rotation, layer, size, and style data.</p>
+    <p><strong>Test Requirements:</strong> Rack L0 footprint tests verify text counts on fixtures with footprint annotations.</p>
+    <p><strong>Working Definition:</strong> Text works when annotated footprints parse with expected text collection counts.</p>
+  </section>
+
+  <section
+    data-interface="EasyEda3DModel"
+    data-rack-stratum="L0_foundation"
+    data-test-file="tests/L0_foundation/test_L0_009_3d_model.py"
+    data-test-target="EasyEda3DModel">
+    <h2>EasyEda3DModel</h2>
+    <p><strong>Rationale:</strong> 3D model references need stable URL and pose metadata for downstream conversion workflows.</p>
+    <p><strong>Purpose:</strong> Store UUID, title, translation, rotation, and derived EasyEDA model URLs.</p>
+    <p><strong>Test Requirements:</strong> Rack L0 3D-model tests verify URL derivation, empty UUID behavior, JSON round-trip, and fixture extraction.</p>
+    <p><strong>Working Definition:</strong> A 3D model works when URLs derive from UUIDs and all pose fields round-trip through JSON.</p>
+  </section>
+
+  <section
+    data-interface="EasyEdaApiClient"
+    data-rack-stratum="L0_foundation"
+    data-test-file="tests/L0_foundation/test_L0_010_cli_fetch_part.py"
+    data-test-target="fetch-part">
+    <h2>EasyEdaApiClient</h2>
+    <p><strong>Rationale:</strong> API access needs one boundary for caching, timeout, and rate-limit behavior.</p>
+    <p><strong>Purpose:</strong> Fetch EasyEDA component JSON directly or from a cache directory while keeping network policy out of parser dataclasses.</p>
+    <p><strong>Test Requirements:</strong> Rack L0 CLI tests exercise cached API reads through the fetch-part command path.</p>
+    <p><strong>Working Definition:</strong> The client works when cached fixture responses can drive raw and summary CLI output without network access.</p>
+  </section>
+
+  <section
+    data-interface="extract_3d_models_from_api_response"
+    data-rack-stratum="L0_foundation"
+    data-test-file="tests/L0_foundation/test_L0_009_3d_model.py"
+    data-test-target="extract_3d_models_from_api_response">
+    <h2>extract_3d_models_from_api_response</h2>
+    <p><strong>Rationale:</strong> 3D references are nested in API responses and need a stable extraction helper.</p>
+    <p><strong>Purpose:</strong> Return model references from component JSON without requiring callers to know EasyEDA response nesting.</p>
+    <p><strong>Test Requirements:</strong> Rack L0 3D-model tests run extraction across every saved API fixture.</p>
+    <p><strong>Working Definition:</strong> Extraction works when all public fixtures return a list without crashing and valid models round-trip independently.</p>
+  </section>
+
+  <section
+    data-interface="parse_svg_path"
+    data-rack-stratum="L0_foundation"
+    data-test-file="tests/L0_foundation/test_L0_008_svg_path_parse.py"
+    data-test-target="parse_svg_path">
+    <h2>parse_svg_path</h2>
+    <p><strong>Rationale:</strong> EasyEDA path strings must be parsed consistently for downstream drawing and conversion.</p>
+    <p><strong>Purpose:</strong> Convert SVG-like path commands into simple segment dictionaries while preserving arc flags and coordinates.</p>
+    <p><strong>Test Requirements:</strong> Rack L0 SVG path tests cover move, line, horizontal, vertical, cubic, quadratic, arc, close, relative, compact, and negative-coordinate commands.</p>
+    <p><strong>Working Definition:</strong> Path parsing works when supported commands produce stable segment dictionaries and empty input returns an empty list.</p>
+  </section>
+
+  <section
+    data-interface="CliCommandSpec"
+    data-rack-stratum="L99_signoff"
+    data-test-file="tests/L99_signoff/test_L99_002_design_docs.py"
+    data-test-target="CLI_COMMANDS">
+    <h2>CliCommandSpec</h2>
+    <p><strong>Rationale:</strong> CLI metadata needs a typed registry item that docs and signoff can inspect.</p>
+    <p><strong>Purpose:</strong> Store command name, design-doc path, and help text for command registration and documentation checks.</p>
+    <p><strong>Test Requirements:</strong> Rack L99 design-doc tests inspect the command registry and require matching CLI design docs.</p>
+    <p><strong>Working Definition:</strong> Command metadata works when every registered command has matching help, design documentation, and config-contract declaration.</p>
+  </section>
+</main>
+</body>
+</html>
