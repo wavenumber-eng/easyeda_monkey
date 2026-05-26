@@ -1,5 +1,0 @@
-version = 1
-
-[module]
-name = "easyeda_monkey"
-notes = "No active deferred failures are recorded at initial migration."
