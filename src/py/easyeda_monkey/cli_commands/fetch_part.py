@@ -11,6 +11,7 @@ from typing import cast
 
 from ..cli_command_types import CliCommandSpec
 from ..easyeda_api import EasyEdaApiClient
+from ..easyeda_3d_model import extract_3d_models_from_api_response
 
 JsonScalar = str | int | float | bool | None
 JsonValue = JsonScalar | list["JsonValue"] | dict[str, "JsonValue"]
@@ -93,6 +94,7 @@ def summarize_component(component_data: Mapping[str, JsonValue], lcsc_id: str) -
     package_detail = _dict_or_empty(result.get("packageDetail"))
     footprint_data = _dict_or_empty(package_detail.get("dataStr"))
     footprint_shapes = _list_or_empty(footprint_data.get("shape"))
+    models_3d = extract_3d_models_from_api_response(dict(component_data))
 
     return {
         "lcsc_id": _lcsc_id_from_result(result, default=lcsc_id),
@@ -106,6 +108,13 @@ def summarize_component(component_data: Mapping[str, JsonValue], lcsc_id: str) -
         "footprint": {
             "shape_count": len(footprint_shapes),
             "has_data": bool(footprint_shapes),
+        },
+        "models_3d": {
+            "count": len(models_3d),
+            "has_data": bool(models_3d),
+            "uuids": [model.uuid for model in models_3d],
+            "step_urls": [model.step_url for model in models_3d],
+            "obj_urls": [model.obj_url for model in models_3d],
         },
     }
 

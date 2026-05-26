@@ -73,7 +73,12 @@ The package installs the `easyeda-monkey` console script.
 easyeda-monkey --version
 easyeda-monkey fetch-part C21190
 easyeda-monkey fetch-part C21190 --cache-dir .cache/easyeda --output C21190.summary.json
+easyeda-monkey download-part C21190 --output-dir output
 ```
+
+`download-part` writes to `output/<LCSC_ID>/` by default. The bundle includes
+the raw API response, a compact summary, extracted 3D model metadata, and STEP
+or OBJ model files when EasyEDA exposes a model reference for the part.
 
 The top-level CLI module is only an orchestrator. Each public subcommand lives
 in its own `easyeda_monkey.cli_commands` module, even when the command is

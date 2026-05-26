@@ -17,6 +17,17 @@ def test_normalize_lcsc_id_accepts_prefixed_and_scalar_ids() -> None:
     assert normalize_lcsc_id(" c21190 ") == "C21190"
 
 
+def test_cli_without_args_prints_version_and_commands(capsys) -> None:
+    """Bare CLI invocation should be an informational command list."""
+    exit_code = main([])
+
+    captured = capsys.readouterr()
+    assert exit_code == 0
+    assert captured.out.startswith("easyeda-monkey 2026.5.26.2")
+    assert "fetch-part" in captured.out
+    assert "download-part" in captured.out
+
+
 def test_fetch_part_summary_uses_cached_fixture(tmp_path: Path) -> None:
     """fetch-part should emit a compact summary from a cache file."""
     cache_dir = tmp_path / "cache"
@@ -42,6 +53,8 @@ def test_fetch_part_summary_uses_cached_fixture(tmp_path: Path) -> None:
     assert summary["found"] is True
     assert summary["symbol"]["shape_count"] > 0
     assert summary["footprint"]["shape_count"] > 0
+    assert summary["models_3d"]["count"] > 0
+    assert summary["models_3d"]["step_urls"]
 
 
 def test_fetch_part_raw_uses_cached_fixture(tmp_path: Path) -> None:

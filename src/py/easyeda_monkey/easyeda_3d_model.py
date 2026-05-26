@@ -90,6 +90,7 @@ class EasyEda3DModel:
         url = self.step_url
         log.info("Downloading STEP from %s", url)
         try:
+            Path(output_path).parent.mkdir(parents=True, exist_ok=True)
             resp = requests.get(url, timeout=timeout)
             resp.raise_for_status()
             Path(output_path).write_bytes(resp.content)
@@ -109,6 +110,7 @@ class EasyEda3DModel:
         url = self.obj_url
         log.info("Downloading OBJ from %s", url)
         try:
+            Path(output_path).parent.mkdir(parents=True, exist_ok=True)
             resp = requests.get(url, timeout=timeout)
             resp.raise_for_status()
             Path(output_path).write_text(resp.text, encoding="utf-8")

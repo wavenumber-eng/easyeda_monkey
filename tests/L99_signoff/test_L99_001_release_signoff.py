@@ -21,7 +21,7 @@ def _project_root() -> Path:
 
 
 PACKAGE_ROOT = _project_root()
-EXPECTED_VERSION = "2026.5.26"
+EXPECTED_VERSION = "2026.5.26.2"
 EXPECTED_RELEASE_DATE = date(2026, 5, 26)
 
 

@@ -158,7 +158,7 @@ wheels = [
 
 [[package]]
 name = "easyeda-monkey"
-version = "2026.5.26"
+version = "2026.5.26.2"
 source = { editable = "." }
 dependencies = [
     { name = "requests" },

@@ -27,7 +27,7 @@ def build_parser() -> argparse.ArgumentParser:
         version=f"%(prog)s {__version__}",
     )
 
-    subparsers = parser.add_subparsers(dest="command", required=True)
+    subparsers = parser.add_subparsers(dest="command")
     register_commands(subparsers)
     return parser
 
@@ -35,7 +35,13 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: Sequence[str] | None = None) -> int:
     """Run the EasyEDA Monkey CLI."""
     parser = build_parser()
-    args = parser.parse_args(argv)
+    args_list = list(argv) if argv is not None else sys.argv[1:]
+    if not args_list:
+        print(f"easyeda-monkey {__version__}")
+        parser.print_help()
+        return 0
+
+    args = parser.parse_args(args_list)
     handler = getattr(args, "handler", None)
     if handler is None:
         parser.print_help(sys.stderr)

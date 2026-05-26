@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026.5.26.2
+
+- Add `easyeda-monkey download-part` to write a local EasyEDA/LCSC component
+  bundle with raw API JSON, summary JSON, extracted 3D model metadata, and
+  requested STEP/OBJ model files.
+- Include 3D model reference counts and URLs in the compact `fetch-part`
+  summary output.
+- Add CLI design documentation and fixture-backed tests for the download
+  workflow.
+
 ## 2026.5.26
 
 - Bootstrap `easyeda-monkey` as a standalone public package from the existing
