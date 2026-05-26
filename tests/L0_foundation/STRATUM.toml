@@ -1,0 +1,12 @@
+name = "Foundation"
+order = 0
+description = "EasyEDA JSON format parsing for symbols, footprints, and 3D model primitives"
+enabled = true
+concerns = ["format"]
+
+objectives = [
+    "Parse EasyEDA tilde-delimited shape strings into typed Python objects",
+    "Parse EasyEDA API JSON responses into the native data model",
+    "Validate coordinate and unit conversions (pixels, 10-mil, mm)",
+    "Round-trip test: parse -> serialize -> compare",
+]

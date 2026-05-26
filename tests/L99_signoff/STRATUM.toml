@@ -1,0 +1,31 @@
+name = "Release Signoff"
+order = 99
+description = "Final release signoff checks for versioning and Python hygiene"
+enabled = true
+concerns = ["release", "signoff"]
+
+objectives = [
+    "Package version metadata matches the release date contract",
+    "Changelog mentions the release version",
+    "Python signoff does not regress against the accepted baseline",
+]
+
+[dependencies]
+strata = ["L0_foundation"]
+note = "L99 is enabled because the current signoff lane is lightweight."
+
+[[subtests]]
+id = "L99_001"
+file = "test_L99_001_release_signoff.py"
+name = "Release Signoff"
+description = "Validate version contract and run py_signoff"
+concerns = ["release", "signoff"]
+test_case_type = "audit_meta"
+
+[subtests.objectives]
+version_contract = "Date-based version metadata matches pyproject and package API"
+changelog = "Release notes mention the package version"
+python_hygiene = "py_signoff has zero findings"
+
+[subtests.approach]
+pytest = "Run package-local signoff checks as normal pytest tests"

@@ -1,0 +1,23 @@
+{
+  "annotation_missing_offenders": [],
+  "any_count_total": 49,
+  "complexity_offenders": {
+    "scripts/py_signoff.py::_annotation_missing": 14,
+    "scripts/py_signoff.py::_count_any_in_module": 11,
+    "scripts/py_signoff.py::_evaluate": 24,
+    "scripts/py_signoff.py::main": 11,
+    "src/py/easyeda_monkey/easyeda_footprint.py::EeFootprintText.from_fields": 13,
+    "src/py/easyeda_monkey/easyeda_footprint.py::_parse_shape_into_footprint": 13,
+    "src/py/easyeda_monkey/easyeda_pad.py::EeFootprintPad.from_fields": 16,
+    "src/py/easyeda_monkey/easyeda_pin.py::EasyEdaPin.from_shape_string": 41,
+    "src/py/easyeda_monkey/easyeda_svg_path.py::parse_svg_path": 36,
+    "src/py/easyeda_monkey/easyeda_symbol.py::_parse_shape_into_symbol": 12
+  },
+  "duplicate_groups": [],
+  "file_bytes_offenders": {},
+  "file_lines_offenders": {},
+  "max_file_bytes": 100000,
+  "max_file_lines": 2500,
+  "max_new_code_complexity": 10,
+  "schema": 1
+}

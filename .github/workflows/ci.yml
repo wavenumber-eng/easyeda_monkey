@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    name: test (${{ matrix.os }}, py${{ matrix.python-version }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ["3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: Set up Python
+        run: uv python install ${{ matrix.python-version }}
+      - name: Run tests
+        run: uv run --extra test pytest
+      - name: Run Rack smoke lane
+        run: uv run --extra test rack run --all
+      - name: Run signoff
+        run: uv run --extra test python scripts/py_signoff.py --root . --baseline scripts/py_signoff_baseline.json
+      - name: Run ruff
+        run: uv run --extra test ruff check .
+      - name: Run pyright
+        run: uv run --extra test pyright src/py tests
+      - name: Build package
+        run: uv run --extra test python -m build
+      - name: Check package
+        run: uv run --extra test twine check dist/*
+      - name: Run installed import smoke
+        run: uv run --extra test python scripts/install_smoke.py

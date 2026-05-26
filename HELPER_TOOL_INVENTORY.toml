@@ -1,0 +1,5 @@
+version = 1
+
+[module]
+name = "easyeda_monkey"
+notes = "No separate helper-tool inventory is needed at initial migration beyond the package parser modules themselves."

@@ -1,0 +1,53 @@
+[rack]
+name = "EasyEDA / LCSC Suite"
+version = "1.0"
+description = "Rack test suite for EasyEDA symbol, footprint, and 3D model parsing"
+note = "Symbols and footprints first; current tests use saved package-local API fixtures"
+default_lane = "fast"
+
+[strata]
+order = [
+    "L0_foundation",
+    "L99_signoff",
+]
+default_enabled = [
+    "L0_foundation",
+    "L99_signoff",
+]
+
+[concerns.format]
+description = "EasyEDA JSON format parsing"
+
+[concerns.format.symbols]
+description = "Schematic symbol elements (pins, graphics, text)"
+
+[concerns.format.footprints]
+description = "PCB footprint elements (pads, tracks, holes, copper)"
+
+[concerns.format.models_3d]
+description = "3D model references and geometry"
+
+[concerns.api]
+description = "LCSC/EasyEDA component API client"
+
+[concerns.release]
+description = "Package release smoke checks"
+
+[concerns.signoff]
+description = "Final release quality gates"
+
+[lanes.fast]
+description = "Default smoke lane for structural/path verification"
+
+[lanes.full]
+description = "Broader routine-validation lane"
+
+[lanes.strict]
+description = "Heavier or stricter validation lane"
+
+[dependencies]
+python_packages = [
+    "pytest",
+    "pytest-json-report",
+    "wn-rack",
+]
