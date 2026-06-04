@@ -10,8 +10,8 @@ from pathlib import Path
 from typing import cast
 
 from ..cli_command_types import CliCommandSpec
-from ..easyeda_api import EasyEdaApiClient
 from ..easyeda_3d_model import extract_3d_models_from_api_response
+from ..easyeda_api import EasyEdaApiClient
 
 JsonScalar = str | int | float | bool | None
 JsonValue = JsonScalar | list["JsonValue"] | dict[str, "JsonValue"]

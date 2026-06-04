@@ -1,0 +1,26 @@
+{
+  "schema_version": "2026.6.4",
+  "commands": [
+    {
+      "name": "fetch-part",
+      "module": "easyeda_monkey.cli_commands.fetch_part",
+      "design_doc": "docs/design/cli/fetch-part.html",
+      "data_command": "fetch-part",
+      "description": "Fetch or summarize one EasyEDA / LCSC component by C-number."
+    },
+    {
+      "name": "download-part",
+      "module": "easyeda_monkey.cli_commands.download_part",
+      "design_doc": "docs/design/cli/download-part.html",
+      "data_command": "download-part",
+      "description": "Fetch one EasyEDA / LCSC component and write a local data/model bundle."
+    },
+    {
+      "name": "version",
+      "module": "easyeda_monkey.cli_commands.version",
+      "design_doc": "docs/design/cli/version.html",
+      "data_command": "version",
+      "description": "Print package and major runtime dependency versions."
+    }
+  ]
+}

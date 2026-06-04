@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026.6.4
+
+- Align the public package structure with the Wavenumber Python standard:
+  repository hygiene files, setup/architecture docs, release notes, and
+  machine-readable command/interface/exception contracts.
+- Add `easyeda-monkey version` and `python -m easyeda_monkey` support.
+- Update CI and release workflows to native Node 24 GitHub Actions.
+- Update release tooling to require `wn-rack>=2026.6.4`.
+- Document current JSON `Any`, parser complexity, `src/py` layout, and Pyright
+  mode exceptions for future ratcheting.
+
 ## 2026.5.26.2
 
 - Add `easyeda-monkey download-part` to write a local EasyEDA/LCSC component

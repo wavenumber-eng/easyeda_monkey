@@ -51,8 +51,8 @@ easyeda-monkey --version</code></pre>
       Contributors should use <code>uv</code> for dependency sync, test runs,
       package builds, and editable CLI install tests.
     </p>
-    <pre><code>uv sync --extra test
-uv run --extra test rack run --all
+    <pre><code>uv sync --all-extras
+uv run rack run --all
 uv tool install --force --editable .
 easyeda-monkey --version</code></pre>
   </section>
@@ -63,7 +63,7 @@ easyeda-monkey --version</code></pre>
       Workspace setup and update scripts should install released CLI tools with
       pinned versions and verify the generated executable.
     </p>
-    <pre><code>uv tool install --force easyeda-monkey==2026.5.26
+    <pre><code>uv tool install --force easyeda-monkey==2026.6.4
 uv tool update-shell
 easyeda-monkey --version</code></pre>
     <p>
@@ -78,7 +78,9 @@ easyeda-monkey --version</code></pre>
     <p>
       Pure Python packages should keep standard PyPA build output in a flat
       <code>dist/</code> folder. Per-platform artifact folders are reserved for
-      packages that build native wheels or platform-specific binaries.
+      packages that build native wheels or platform-specific binaries, such as
+      <code>dist/native/windows-x64/</code>, <code>dist/native/linux-x64/</code>,
+      <code>dist/native/macos-arm64/</code>, and <code>dist/wasm/browser/</code>.
     </p>
     <p>
       Tools in this package family should minimize external dependencies. New

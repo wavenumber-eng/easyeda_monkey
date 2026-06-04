@@ -1,0 +1,39 @@
+{
+  "exceptions": [
+    {
+      "id": "EASYEDA-JSON-ANY",
+      "rule": "discourage Any in production code",
+      "scope": "EasyEDA API boundary, parser pass-through fields, JSON serialization methods, and SVG segment dictionaries",
+      "rationale": "EasyEDA payloads include heterogenous JSON objects and pass-through fields that must preserve source-format data before downstream conversion policy is applied.",
+      "review": "New public structured fields should use typed dataclasses or TypedDicts; the total Any count must not increase without explicit release-note rationale."
+    },
+    {
+      "id": "EASYEDA-COMPLEXITY-RATCHET",
+      "rule": "new code complexity must be A/B",
+      "scope": "tests/support_scripts/py_signoff_baseline.json complexity_offenders",
+      "rationale": "Several parser functions predate the standards repo and encode EasyEDA tilde-delimited grammar branches. The release records the current baseline and blocks growth.",
+      "review": "Parser refactors should split branch-heavy functions and update the baseline only when the offender count or values decrease."
+    },
+    {
+      "id": "EASYEDA-LEGACY-SRC-PY",
+      "rule": "standard src/<package> layout",
+      "scope": "src/py/easyeda_monkey",
+      "rationale": "The package already ships from src/py and downstream references use that layout. Moving it during a release-hardening pass would create avoidable churn.",
+      "review": "Consider migrating to src/easyeda_monkey during a dedicated packaging cleanup release."
+    },
+    {
+      "id": "EASYEDA-PYRIGHT-STANDARD",
+      "rule": "pyright strict",
+      "scope": "pyproject.toml [tool.pyright]",
+      "rationale": "Current parser code still exposes broad EasyEDA JSON boundary types. This release adds an explicit Pyright config and keeps standard mode while the Any and parser-complexity exceptions are worked down.",
+      "review": "Move toward strict type checking as JSON boundary types and parser branch functions are refined."
+    },
+    {
+      "id": "EASYEDA-PYDOCSTYLE-RATCHET",
+      "rule": "public method docstrings",
+      "scope": "legacy parser dataclass helper methods such as to_json, from_json, from_fields, and simple properties",
+      "rationale": "The parser modules predate the pydocstyle gate and already have interface-level design documentation. This release enables Ruff with docstyle selected while ignoring the existing repetitive helper-method docstring gaps.",
+      "review": "New public APIs should include useful docstrings. Work down the ignored D102/D107/D415 set as parser modules are refactored."
+    }
+  ]
+}

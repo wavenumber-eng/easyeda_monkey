@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import easyeda_monkey
 from easyeda_monkey.cli import main, normalize_lcsc_id
 
 CASES_DIR = Path(__file__).parent / "cases" / "api_responses"
@@ -23,9 +24,33 @@ def test_cli_without_args_prints_version_and_commands(capsys) -> None:
 
     captured = capsys.readouterr()
     assert exit_code == 0
-    assert captured.out.startswith("easyeda-monkey 2026.5.26.2")
+    assert captured.out.startswith(f"easyeda-monkey {easyeda_monkey.__version__}")
     assert "fetch-part" in captured.out
     assert "download-part" in captured.out
+    assert "version" in captured.out
+
+
+def test_version_command_reports_package_and_dependency_versions(capsys) -> None:
+    """version should print package, Python, and runtime dependency versions."""
+    exit_code = main(["version"])
+
+    captured = capsys.readouterr()
+    assert exit_code == 0
+    assert f"easyeda-monkey {easyeda_monkey.__version__}" in captured.out
+    assert "python " in captured.out
+    assert "requests " in captured.out
+
+
+def test_version_command_can_emit_json(capsys) -> None:
+    """version --format json should emit a machine-readable version record."""
+    exit_code = main(["version", "--format", "json"])
+
+    captured = capsys.readouterr()
+    payload = json.loads(captured.out)
+    assert exit_code == 0
+    assert payload["easyeda-monkey"] == easyeda_monkey.__version__
+    assert "python" in payload
+    assert "requests" in payload
 
 
 def test_fetch_part_summary_uses_cached_fixture(tmp_path: Path) -> None:

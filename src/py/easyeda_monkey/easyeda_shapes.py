@@ -1,5 +1,4 @@
-"""
-EasyEDA graphic shape primitives — rectangle, circle, ellipse, arc, polyline, polygon, path.
+"""EasyEDA graphic shape primitives — rectangle, circle, ellipse, arc, polyline, polygon, path.
 
 Each shape is parsed from a tilde-delimited string with a type prefix.
 """
@@ -14,7 +13,10 @@ from .easyeda_types import safe_float, safe_str
 
 @dataclass
 class EeRectangle:
-    """EasyEDA rectangle. Format: R~x~y~rx~ry~width~height~strokeColor~strokeWidth~strokeStyle~fillColor~id"""
+    """EasyEDA rectangle.
+
+    Format: R~x~y~rx~ry~width~height~strokeColor~strokeWidth~strokeStyle~fillColor~id
+    """
     x: float = 0.0
     y: float = 0.0
     rx: float = 0.0
@@ -129,7 +131,10 @@ class EeEllipse:
 
 @dataclass
 class EeArc:
-    """EasyEDA arc. Format: A~pathString~helperDots~strokeColor~strokeWidth~strokeStyle~fillColor~id"""
+    """EasyEDA arc.
+
+    Format: A~pathString~helperDots~strokeColor~strokeWidth~strokeStyle~fillColor~id
+    """
     path_string: str = ""
     helper_dots: str = ""
     stroke_color: str = "#000000"
@@ -243,7 +248,10 @@ class EePolygon:
 
 @dataclass
 class EePath:
-    """EasyEDA path (SVG path string, may contain bezier curves). Format: PT~pathString~strokeColor~strokeWidth~strokeStyle~fillColor~id"""
+    """EasyEDA path, including possible bezier curves.
+
+    Format: PT~pathString~strokeColor~strokeWidth~strokeStyle~fillColor~id
+    """
     path_string: str = ""
     stroke_color: str = "#000000"
     stroke_width: float = 1.0

@@ -21,8 +21,8 @@ def _project_root() -> Path:
 
 
 PACKAGE_ROOT = _project_root()
-EXPECTED_VERSION = "2026.5.26.2"
-EXPECTED_RELEASE_DATE = date(2026, 5, 26)
+EXPECTED_VERSION = "2026.6.4"
+EXPECTED_RELEASE_DATE = date(2026, 6, 4)
 
 
 def test_version_contract_matches_date_based_release() -> None:
@@ -31,7 +31,7 @@ def test_version_contract_matches_date_based_release() -> None:
 
     assert pyproject["project"]["version"] == EXPECTED_VERSION
     assert easyeda_monkey.__version__ == EXPECTED_VERSION
-    assert EXPECTED_RELEASE_DATE <= date.today()
+    assert date.today() >= EXPECTED_RELEASE_DATE
 
 
 def test_changelog_mentions_package_version() -> None:
@@ -39,6 +39,15 @@ def test_changelog_mentions_package_version() -> None:
     changelog = (PACKAGE_ROOT / "CHANGELOG.md").read_text(encoding="utf-8")
 
     assert f"## {EXPECTED_VERSION}" in changelog
+
+
+def test_release_note_file_mentions_package_version() -> None:
+    """Verify that the dated release note exists and mentions the version."""
+    release_note = PACKAGE_ROOT / "docs" / "releases" / "2026-06-04.md"
+
+    assert release_note.exists()
+    text = release_note.read_text(encoding="utf-8")
+    assert f"`{EXPECTED_VERSION}`" in text
 
 
 def test_developer_working_docs_are_excluded_from_release_artifacts() -> None:

@@ -1,5 +1,4 @@
-"""
-EasyEDA schematic pin model.
+"""EasyEDA schematic pin model.
 
 Pin format: 7 segments joined by ``^^``, each segment has ``~``-separated fields.
 

@@ -13,12 +13,12 @@ Actions.
 ## Decision
 
 The package uses date-based versions in `YYYY.M.DD` form. For example, the
-May 26, 2026 release is `2026.5.26`.
+June 4, 2026 release is `2026.6.4`.
 
-Release tags use the package name and version:
+Release tags use the package version:
 
 ```text
-easyeda-monkey/v2026.5.26
+v2026.6.4
 ```
 
 Every release must include:
@@ -26,6 +26,7 @@ Every release must include:
 - a matching `pyproject.toml` version
 - a matching `easyeda_monkey.__version__`
 - a matching `CHANGELOG.md` entry
+- a matching `docs/releases/<YYYY-MM-DD>.md` release note
 - a passing pytest suite
 - a passing Rack suite
 - a passing Python signoff baseline check

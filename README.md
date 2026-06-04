@@ -50,7 +50,7 @@ For development:
 ```powershell
 git clone https://github.com/wavenumber-eng/easyeda_monkey.git
 cd easyeda_monkey
-uv sync --extra test
+uv sync --all-extras
 ```
 
 ## Testing
@@ -59,7 +59,7 @@ The active suite uses redistributable saved EasyEDA / LCSC API response
 fixtures and does not require a private corpus.
 
 ```powershell
-uv run --extra test rack run --all
+uv run rack run --all
 ```
 
 Rack is the primary local gate. L99 signoff runs release metadata checks,
@@ -71,9 +71,11 @@ The package installs the `easyeda-monkey` console script.
 
 ```powershell
 easyeda-monkey --version
+easyeda-monkey version
 easyeda-monkey fetch-part C21190
 easyeda-monkey fetch-part C21190 --cache-dir .cache/easyeda --output C21190.summary.json
 easyeda-monkey download-part C21190 --output-dir output
+python -m easyeda_monkey version
 ```
 
 `download-part` writes to `output/<LCSC_ID>/` by default. The bundle includes
@@ -94,7 +96,8 @@ Every public CLI command must have a matching HTML design document under
 when a registered command is missing its design document.
 
 Commands that accept config files must also define a machine-readable contract
-and validation tests before release.
+and validation tests before release. Command, interface, and standards-exception
+manifests live under `docs/contracts/`.
 
 New public features, commands, and external dependencies need explicit
 justification in the commit, PR, or linked plan. Prefer the standard library

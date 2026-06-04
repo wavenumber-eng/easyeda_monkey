@@ -1,10 +1,12 @@
 .venv/
+.env
 dist/
 build/
 *.egg-info/
 .pytest_cache/
 .ruff_cache/
 .pyright/
+rack_results/
 __pycache__/
 *.py[cod]
 tests/rack_results/

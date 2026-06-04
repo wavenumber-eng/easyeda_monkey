@@ -1,5 +1,4 @@
-"""
-EasyEDA 3D model reference and download support.
+"""EasyEDA 3D model reference and download support.
 
 3D models are referenced by UUID in the footprint data and downloaded
 from the EasyEDA modules API as STEP or OBJ files.
@@ -122,8 +121,7 @@ class EasyEda3DModel:
 
 
 def extract_3d_model_from_footprint(ee_fp: EasyEdaFootprint) -> EasyEda3DModel | None:
-    """
-    Extract 3D model reference from an EasyEdaFootprint's raw data.
+    """Extract 3D model reference from an EasyEdaFootprint's raw data.
 
     EasyEDA stores 3D model info in SVGNODE elements within the footprint
     shape list, containing JSON-encoded attributes with UUID, translation,
@@ -139,8 +137,7 @@ def extract_3d_model_from_footprint(ee_fp: EasyEdaFootprint) -> EasyEda3DModel |
 
 
 def extract_3d_models_from_api_response(api_data: dict[str, Any]) -> list[EasyEda3DModel]:
-    """
-    Extract all 3D model references from a raw API response.
+    """Extract all 3D model references from a raw API response.
 
     Searches packageDetail.dataStr.shape for SVGNODE entries containing
     3D model metadata.
