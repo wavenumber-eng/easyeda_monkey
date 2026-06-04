@@ -31,7 +31,6 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import cast
 
-
 DEFAULT_INCLUDES: tuple[str, ...] = (
     "__init__.py",
     "src/py/easyeda_monkey/**/*.py",
@@ -100,7 +99,7 @@ class Baseline:
     duplicate_groups: list[dict[str, object]] = field(default_factory=list)
 
     @classmethod
-    def from_dict(cls, payload: dict[str, object]) -> "Baseline":
+    def from_dict(cls, payload: dict[str, object]) -> Baseline:
         return cls(
             schema=_int_payload_field(payload, "schema", 1),
             max_file_lines=_int_payload_field(

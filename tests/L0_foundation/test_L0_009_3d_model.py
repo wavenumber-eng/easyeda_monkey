@@ -8,7 +8,6 @@ import json
 from pathlib import Path
 
 import pytest
-
 from easyeda_monkey.easyeda_3d_model import (
     EasyEda3DModel,
     extract_3d_models_from_api_response,

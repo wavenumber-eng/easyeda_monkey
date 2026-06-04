@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>EasyEDA Monkey Architecture</title>
+</head>
+<body data-doc="architecture" data-profile="python-package">
+  <h1>Architecture</h1>
+  <p>
+    EasyEDA Monkey is a parser and download support package. It preserves
+    EasyEDA-native symbols, footprints, SVG path fragments, pads, holes, vias,
+    tracks, and 3D model references for downstream tooling.
+  </p>
+
+  <h2>Layers</h2>
+  <ul>
+    <li><code>easyeda_api</code>: LCSC/EasyEDA component API client.</li>
+    <li><code>easyeda_* </code> modules: typed parser/data model boundaries.</li>
+    <li><code>cli.py</code>: top-level CLI orchestration only.</li>
+    <li><code>cli_commands/</code>: one module per public command.</li>
+    <li><code>docs/contracts/</code>: command, interface, and exception manifests.</li>
+  </ul>
+
+  <h2>Boundaries</h2>
+  <p>
+    Conversion policy for KiCad, Altium, or other EDA formats is intentionally
+    outside this package. Public behavior must be backed by Rack tests and
+    design documentation before release.
+  </p>
+</body>
+</html>

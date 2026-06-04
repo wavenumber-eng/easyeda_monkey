@@ -1,0 +1,47 @@
+{
+  "schema_version": "2026.6.4",
+  "interfaces": [
+    {
+      "name": "easyeda_monkey.easyeda_symbol.EasyEdaSymbol",
+      "design_doc": "docs/design/api/easyeda-native-data-model.html",
+      "data_interface": "EasyEdaSymbol",
+      "description": "Parsed EasyEDA schematic symbol."
+    },
+    {
+      "name": "easyeda_monkey.easyeda_footprint.EasyEdaFootprint",
+      "design_doc": "docs/design/api/easyeda-native-data-model.html",
+      "data_interface": "EasyEdaFootprint",
+      "description": "Parsed EasyEDA footprint."
+    },
+    {
+      "name": "easyeda_monkey.easyeda_3d_model.EasyEda3DModel",
+      "design_doc": "docs/design/api/easyeda-native-data-model.html",
+      "data_interface": "EasyEda3DModel",
+      "description": "Extracted EasyEDA 3D model reference."
+    },
+    {
+      "name": "easyeda_monkey.easyeda_api.EasyEdaApiClient",
+      "design_doc": "docs/design/api/easyeda-native-data-model.html",
+      "data_interface": "EasyEdaApiClient",
+      "description": "EasyEDA / LCSC component API client."
+    },
+    {
+      "name": "easyeda_monkey.easyeda_3d_model.extract_3d_models_from_api_response",
+      "design_doc": "docs/design/api/easyeda-native-data-model.html",
+      "data_interface": "extract_3d_models_from_api_response",
+      "description": "Extract 3D model references from one API payload."
+    },
+    {
+      "name": "easyeda_monkey.easyeda_svg_path.parse_svg_path",
+      "design_doc": "docs/design/api/easyeda-native-data-model.html",
+      "data_interface": "parse_svg_path",
+      "description": "Parse an EasyEDA SVG path string into typed segment dictionaries."
+    },
+    {
+      "name": "easyeda_monkey.cli_command_types.CliCommandSpec",
+      "design_doc": "docs/design/api/easyeda-native-data-model.html",
+      "data_interface": "CliCommandSpec",
+      "description": "CLI command registry metadata."
+    }
+  ]
+}

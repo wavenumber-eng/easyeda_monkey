@@ -12,6 +12,8 @@ objectives = [
     "Pyright type checking passes",
     "Registered CLI commands have matching HTML design documentation",
     "Dataclasses and major interfaces have design docs and Rack test ownership",
+    "Machine-readable command/interface/exception contracts match source and docs",
+    "Repository hygiene files and release artifact exclusions are present",
 ]
 
 [dependencies]
@@ -80,3 +82,36 @@ rack_test_ownership = "Each interface doc references an exercising Rack stratum 
 
 [subtests.approach]
 pytest = "Inspect source AST, design HTML, Rack strata, and test files"
+
+[[subtests]]
+id = "L99_005"
+file = "test_L99_005_docs_contracts.py"
+name = "Docs And Contract Signoff"
+description = "Validate command, interface, and exception contracts"
+concerns = ["release", "signoff", "docs"]
+test_case_type = "audit_meta"
+
+[subtests.objectives]
+command_manifest = "Command manifest matches CLI registration and design docs"
+interface_manifest = "Interface manifest matches importable objects and design docs"
+exceptions = "Current standards exceptions are documented"
+
+[subtests.approach]
+pytest = "Inspect JSON contracts, importable modules, and design docs"
+
+[[subtests]]
+id = "L99_006"
+file = "test_L99_006_repo_hygiene.py"
+name = "Repository Hygiene Signoff"
+description = "Validate root hygiene files, secret ignores, and release exclusions"
+concerns = ["release", "signoff"]
+test_case_type = "audit_meta"
+
+[subtests.objectives]
+root_files = "Required root files exist"
+secret_hygiene = ".env is ignored and not tracked"
+sdist_exclusions = "Plans, research, and local results are excluded from sdist"
+setup_docs = "Setup docs describe tooling and future binary artifact layout"
+
+[subtests.approach]
+pytest = "Inspect root files, git index, pyproject, and setup documentation"

@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    name: test (${{ matrix.os }}, py${{ matrix.python-version }})
+    name: ${{ matrix.os }} / Python ${{ matrix.python-version }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -17,15 +17,17 @@ jobs:
         python-version: ["3.12"]
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v5
-      - name: Set up Python
-        run: uv python install ${{ matrix.python-version }}
+      - uses: actions/checkout@v6
+      - uses: astral-sh/setup-uv@v8.2.0
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Sync
+        run: uv sync --all-extras
       - name: Run Rack test lane
-        run: uv run --extra test rack run --all
+        run: uv run rack run --all
       - name: Build package
-        run: uv run --extra test python -m build
+        run: uv run python -m build
       - name: Check package
-        run: uv run --extra test twine check dist/*
+        run: uv run twine check dist/*
       - name: Run installed import test
-        run: uv run --extra test python tests/support_scripts/install_test.py
+        run: uv run python tests/support_scripts/install_test.py

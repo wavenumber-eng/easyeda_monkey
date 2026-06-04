@@ -1,5 +1,4 @@
-"""
-LCSC / EasyEDA component API client.
+"""LCSC / EasyEDA component API client.
 
 Fetches symbol, footprint, and 3D model data by LCSC part number.
 Uses ``requests`` for HTTP — this is the only module with an external dependency.
@@ -25,8 +24,7 @@ _DEFAULT_TIMEOUT = 15
 
 
 class EasyEdaApiClient:
-    """
-    Client for the LCSC / EasyEDA component API.
+    """Client for the LCSC / EasyEDA component API.
 
     Fetches component data by LCSC part number (e.g. ``C21190``).
     Supports optional disk caching for offline use and test fixture generation.
@@ -47,8 +45,7 @@ class EasyEdaApiClient:
             self._cache_dir.mkdir(parents=True, exist_ok=True)
 
     def fetch_component(self, lcsc_id: str) -> dict[str, Any]:
-        """
-        Fetch raw API response for an LCSC component.
+        """Fetch raw API response for an LCSC component.
 
         Returns the full JSON response dict. Caches to disk if cache_dir set.
         """

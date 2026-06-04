@@ -1,5 +1,4 @@
-"""
-Shared enums, constants, and coordinate helpers for EasyEDA parsing.
+"""Shared enums, constants, and coordinate helpers for EasyEDA parsing.
 
 Single-module by design — no external dependencies.
 """

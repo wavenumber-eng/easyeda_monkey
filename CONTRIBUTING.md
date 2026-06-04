@@ -26,7 +26,7 @@ packaging impact.
 Expected local checks:
 
 ```powershell
-uv run --extra test rack run --all
+uv run rack run --all
 ```
 
 Release decisions, compatibility policy, and public contract changes should be

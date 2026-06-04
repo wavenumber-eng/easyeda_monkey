@@ -14,8 +14,8 @@ Rules:
 Quick start:
 
 ```powershell
-uv run --extra test rack list
-uv run --extra test rack run --all
+uv run rack list
+uv run rack run --all
 ```
 
 Current active strata:

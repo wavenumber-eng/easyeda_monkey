@@ -1,5 +1,4 @@
-"""
-EasyEDA PCB footprint data model and parser.
+"""EasyEDA PCB footprint data model and parser.
 
 Parses the ``result.packageDetail.dataStr`` section of an LCSC API response.
 """
@@ -123,7 +122,10 @@ class EeFootprintVia:
 
 @dataclass
 class EeFootprintText:
-    """Text on footprint. Format: TEXT~type~x~y~strokeWidth~rotation~mirror~layerId~net~fontSize~string~textPath~id"""
+    """Text on footprint.
+
+    Format: TEXT~type~x~y~strokeWidth~rotation~mirror~layerId~net~fontSize~string~textPath~id
+    """
     text_type: str = ""  # L (label), P (prefix)
     x: float = 0.0
     y: float = 0.0

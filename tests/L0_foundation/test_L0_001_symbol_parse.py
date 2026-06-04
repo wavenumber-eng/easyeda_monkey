@@ -11,7 +11,6 @@ import json
 from pathlib import Path
 
 import pytest
-
 from easyeda_monkey.easyeda_symbol import EasyEdaSymbol
 
 CASES_DIR = Path(__file__).parent / "cases" / "api_responses"

@@ -1,5 +1,4 @@
-"""
-Minimal SVG path string parser for EasyEDA arc and bezier primitives.
+"""Minimal SVG path string parser for EasyEDA arc and bezier primitives.
 
 Handles the subset of SVG path commands used by EasyEDA:
   M (moveto), L (lineto), H (horizontal), V (vertical),
@@ -16,8 +15,7 @@ from typing import Any
 
 
 def parse_svg_path(d: str | None) -> list[dict[str, Any]]:
-    """
-    Parse an SVG path ``d`` attribute into a list of segment dicts.
+    """Parse an SVG path ``d`` attribute into a list of segment dicts.
 
     Each segment dict has a ``kind`` key and relevant coordinate fields.
     All coordinates are floats in the source coordinate system (not converted).

@@ -1,5 +1,4 @@
-"""
-EasyEDA schematic symbol data model and parser.
+"""EasyEDA schematic symbol data model and parser.
 
 Parses the ``result.dataStr`` section of an LCSC API response into
 a typed Python object with pins, graphics, and metadata.
@@ -49,8 +48,7 @@ class EeSymbolInfo:
 
 @dataclass
 class EasyEdaSymbol:
-    """
-    EasyEDA schematic symbol — the native data model.
+    """EasyEDA schematic symbol — the native data model.
 
     Constructed from an LCSC API response or saved JSON fixture.
     """

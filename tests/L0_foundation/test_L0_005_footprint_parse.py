@@ -8,7 +8,6 @@ import json
 from pathlib import Path
 
 import pytest
-
 from easyeda_monkey.easyeda_footprint import EasyEdaFootprint
 
 CASES_DIR = Path(__file__).parent / "cases" / "api_responses"
@@ -227,7 +226,13 @@ def test_footprint_has_silkscreen():
     """Footprints should have at least some silkscreen (tracks or circles)."""
     data = json.loads((CASES_DIR / "C21190__resistor_0603_1k.json").read_text(encoding="utf-8"))
     fp = EasyEdaFootprint.from_json(data)
-    total_gfx = len(fp.tracks) + len(fp.circles) + len(fp.arcs) + len(fp.rectangles) + len(fp.polylines)
+    total_gfx = (
+        len(fp.tracks)
+        + len(fp.circles)
+        + len(fp.arcs)
+        + len(fp.rectangles)
+        + len(fp.polylines)
+    )
     assert total_gfx >= 1, "Footprint has no silkscreen/graphics"
 
 

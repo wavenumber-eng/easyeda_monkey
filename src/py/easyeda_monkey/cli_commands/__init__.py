@@ -5,11 +5,12 @@ from __future__ import annotations
 import argparse
 
 from ..cli_command_types import CliCommandSpec
-from . import download_part, fetch_part
+from . import download_part, fetch_part, version
 
 COMMANDS: tuple[CliCommandSpec, ...] = (
     fetch_part.COMMAND,
     download_part.COMMAND,
+    version.COMMAND,
 )
 
 
@@ -19,3 +20,4 @@ def register_commands(
     """Register all public CLI subcommands with an argparse parser."""
     fetch_part.register(subparsers)
     download_part.register(subparsers)
+    version.register(subparsers)

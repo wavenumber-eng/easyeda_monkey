@@ -2,7 +2,9 @@
 
 ## Validation
 
-- [ ] `uv run --extra test rack run --all`
+- [ ] `uv run rack run --all`
+- [ ] `uv run python -m build`
+- [ ] `uv run twine check dist/*`
 
 ## Public Surface
 

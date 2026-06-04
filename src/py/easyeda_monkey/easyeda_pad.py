@@ -1,7 +1,7 @@
-"""
-EasyEDA PCB pad model.
+"""EasyEDA PCB pad model.
 
-Pad format: PAD~shape~x~y~width~height~layerId~net~number~holeRadius~points~rotation~id~holeLength~holePoints~plated~...
+Pad format:
+PAD~shape~x~y~width~height~layerId~net~number~holeRadius~points~rotation~id~holeLength~holePoints~plated~...
 
 Single-class module by design.
 """

@@ -1,3 +1,5 @@
 """EasyEDA / LCSC / JLCPCB schematic symbol, footprint, and 3D model parser."""
 
-__version__ = "2026.5.26.2"
+from ._version import __version__
+
+__all__ = ["__version__"]

@@ -88,6 +88,8 @@ def run_install_test(wheel: Path) -> None:
             env=env,
         )
         _run([str(_venv_script(venv_dir, "easyeda-monkey")), "--version"], cwd=temp_dir, env=env)
+        _run([str(_venv_script(venv_dir, "easyeda-monkey")), "version"], cwd=temp_dir, env=env)
+        _run([str(python), "-m", "easyeda_monkey", "--version"], cwd=temp_dir, env=env)
         sys.stdout.write("Installed-package test passed.\n")
 
 
