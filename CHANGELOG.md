@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026.9.11
+
+- Support Python 3.12 through 3.14, allowing downstream tools to adopt Python 3.14.
+- Test all three supported Python versions in CI and publish using Python 3.14.
+- Pin Hatchling to 1.31.0 so release metadata remains compatible with the
+  release validator.
+- Preserve parser behavior, CLI arguments, and component bundle formats.
+
 ## 2026.6.4
 
 - Align the public package structure with the Wavenumber Python standard:

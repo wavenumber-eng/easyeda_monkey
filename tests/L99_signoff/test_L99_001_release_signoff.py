@@ -21,8 +21,8 @@ def _project_root() -> Path:
 
 
 PACKAGE_ROOT = _project_root()
-EXPECTED_VERSION = "2026.6.4"
-EXPECTED_RELEASE_DATE = date(2026, 6, 4)
+EXPECTED_VERSION = "2026.9.11"
+EXPECTED_RELEASE_DATE = date(2026, 9, 11)
 
 
 def test_version_contract_matches_date_based_release() -> None:
@@ -43,7 +43,7 @@ def test_changelog_mentions_package_version() -> None:
 
 def test_release_note_file_mentions_package_version() -> None:
     """Verify that the dated release note exists and mentions the version."""
-    release_note = PACKAGE_ROOT / "docs" / "releases" / "2026-06-04.md"
+    release_note = PACKAGE_ROOT / "docs" / "releases" / "2026-09-11.md"
 
     assert release_note.exists()
     text = release_note.read_text(encoding="utf-8")
